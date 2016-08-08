@@ -1,0 +1,101 @@
+PLANNING
+ - backlog
+ - scope V0.1 => done
+ - estimation coûts
+ - estimation force travail
+ - planning
+ - preparation suivi 
+
+BACKLOG
+Présence de monstres
+Autonomie d'attaque de monstres
+Gestion d'objets et d'inventaires
+Gestion de stats perso: force, agilité, intelligence
+Gestion de bonus
+Gestion de vie
+Gestion des combats
+Gestion de la vitesse, avec penalites de poids
+Sauvegarde de l'état du jeu
+Rendu partiel d'un niveau centré en partie sur le joueur
+Gestion des mobs, avec blocage sur le mob joueur
+Zoom IN/zoom OUT
+Tweak du nombre de salles et de leur taille
+Création d'un bestiaire graphique
+Gestion de plusieurs niveaux dans le donjon
+Gestion du champ de vision
+Gestion d'un log des actions, blocages, etc...
+Gestion des portes pour les salles, a ouvrir
+Inventaire: cumul des objets du même type
+Ajout de ponctuation dans les affichages de texte
+Affichage des tours
+Gestion de l'empilement des objets
+Affichage des éléments de l'inventaire dans l'ordre alphabétique
+
+
+SCOPE V0.3
+INITIAL
+Gestion de plusieurs niveaux dans le donjon
+Gestion d'un log des actions, blocages, etc...
+Sauvegarde de l'état du jeu
+Choix du ramassage/drop d'un objet
+TODO
+Gestion de plusieurs niveaux dans le donjon
+Sauvegarde de l'état du jeu
+EN COURS
+Choix du drop d'un objet
+Creation des murs et des portes 2016-06-19 
+DONE
+Gestion d'un log des actions, blocages, etc... => log OK pour les recupérations de trucs au sol
+Inventaire: cumul des objets du même type
+Choix du ramassage de plusieurs objets=> listing des objets affiché, ordonnancement des lettres de l'inventaire, en properties 2016-03-21
+Inventaire: affichage des slots dans l'ordre 2016-04-09
+BUGS
+Pas d'affectation de lettre de slot dans le ramassage multiple => corrigé
+
+
+
+SCOPE V0.2
+INITIAL
+Déplacement d'un personnage dans le labyrinthe avec le clic sur une case visible
+Gestion d'objets et d'inventaires
+DONE
+Implementation de Djisktra
+Ajout d'une liste d'actions joueur lors d'un clic (planification d'un chemin complexe)
+Gestion d'une liste d'actions pour un mob
+Possibilité d'interruption
+Déplacement d'un personnage dans le labyrinthe avec le clic sur une case visible
+Gestion d'objets et d'inventaires
+BILAN
+terminé, nouveaux besoins déterminés en cours de dévs 2016-02-25
+
+SCOPE V0.1
+INITIAL
+Déplacement d'un personnage dans le labyrinthe avec les touches
+Gestion de la vitesse, avec pénalités de poids
+Génération de niveaux aléatoires composés de pièces et de couloirs
+Gestion de stats perso: force, dexterité, intelligence
+DONE
+Gestion de stats perso: force, dexterité, intelligence
+Déplacement d'un personnage dans le labyrinthe avec les touches
+Gestion de la vitesse
+Génération de niveaux aléatoires composés de pièces et de couloirs
+BILAN
+terminé, "Gestion de stats perso: force, dexterité, intelligence" necessiste d'autres fonctions 2016-01-22
+
+SPECS
+Gestion des touches limité par le droit du tour, attente des autres mobs sur l'action du joueur
+Gestion d'une liste d'actions pour un mob
+Deplacement dans le labyrinthe par Djisktra
+
+TESTS
+V0.1
+Lancer le jeu
+Déplacer le personnage TBE
+ g,d,h,b
+ contre les bords du jeu
+ hors champ
+V0.2
+Déplacer la caméra
+Clic pour aller sur une case
+Récupération d'un objet au sol 
+ 

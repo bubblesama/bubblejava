@@ -1,0 +1,39 @@
+DD - Release notes
+
+TODO
+Manage megamap generation
+Manage game over
+Manage sounds
+Manage monsters clues
+Redo dungeon content generation
+Add blobs
+Add bats
+Add dragons
+Add spider
+
+Versionning
+	
+current
+
+V00.00.03b01	2011/07/18
+Main dungeon added
+Manage no re-enter
+Manage lives and respawn
+Manage win with two crown parts
+
+v00.00.02b01	2011/06/21	
+Mobs added, killed and moved: rat, dragon, troll, spider
+Manage mega map
+Manage map discovery
+Manage map creation
+Manage remanent items (axe, key, boat)
+Manage ladder
+Tile discovering via tiles groups
+Basic map editor
+Moving snake following player
+Killing snake with puff
+
+v00.00.01b01	2011/04/16	
+Moving, shooting arrows and be killed by them.
+Simple Java2D rendering	
+
