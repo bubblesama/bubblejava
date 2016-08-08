@@ -16,13 +16,18 @@ public class AsciiArtEditor extends BasicGame{
 	public int artW = 500;
 	public int artH = 500;
 	public Color artBorderColor = Color.cyan;
-
-
 	public int artCharW = 50;
 	public int artCharH = 10;
 	public char[][] artCharMap;
 	
 	public SlickAutoFont font;
+	
+	
+	
+	public int colorGridX0 = 600;
+	public int colorGridY0= 100;
+	public int colorGridElementW = 30;
+	public int colorGridElementH = 30;
 	
 	
 	private char currentChar = '0';
@@ -45,6 +50,14 @@ public class AsciiArtEditor extends BasicGame{
 		
 		// currentChar
 		g.drawImage(font.getChar(currentChar),700,10);
+		
+		
+		//color grid
+		
+		for (int i=0;i<SlickPalette16.table.length;i++){
+			g.setColor(SlickPalette16.table[i]);
+			g.fillRect(colorGridX0, colorGridY0+i*colorGridElementH, colorGridElementW, colorGridElementH);
+		}
 		
 	}
 
