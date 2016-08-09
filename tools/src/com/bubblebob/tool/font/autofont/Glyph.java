@@ -1,6 +1,5 @@
 package com.bubblebob.tool.font.autofont;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 
 public class Glyph {
@@ -10,9 +9,6 @@ public class Glyph {
 	public int i;
 	public int j;
 	public Image pic;
-
-	
-	private static final Color myWhite = new Color(255, 255, 255);
 
 	public Glyph(char c, int i, int j, boolean monoWidth, Image basePic) {
 		this.pic = basePic;

@@ -10,7 +10,6 @@ public class SlickAutoCharacter {
 	public Color color;
 	public Color background; 
 	
-	
 	public SlickAutoCharacter(SlickAutoFont font, char c){
 		this.c = c;
 		this.glyph = font.getGlyph(c);
