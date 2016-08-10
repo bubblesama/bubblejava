@@ -1,6 +1,5 @@
 package com.bubblebob.tool.font.autofont.editor;
 
-import org.apache.poi.hssf.record.RightMarginRecord;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
@@ -31,7 +30,7 @@ public class AsciiArtEditor extends BasicGame{
 	public int colorGridElementH = 30;
 	
 	
-	private char currentChar = '0';
+	private char currentChar = 'A';
 	private Color currentColor = SlickPalette16.C_03_OLIVE;
 	private Color currentBackgroundColor = SlickPalette16.C_05_PURPLE;
 
@@ -72,7 +71,8 @@ public class AsciiArtEditor extends BasicGame{
 	public void init(GameContainer gc) throws SlickException {
 		System.out.println("init");
 		this.font = new SlickAutoFont();
-		this.font.initGlyphMap("assets/ascii.txt", "assets/ascii.png", true);
+//		this.font.initGlyphMap("assets/ascii.txt", "assets/ascii.png", true);
+		this.font.initGlyphMap("assets/cp437.txt", "assets/cp437.png", true);
 		this.currentAutoCharacter = new SlickAutoCharacter(font, currentChar, currentColor, currentBackgroundColor);
 		for (int i=0;i<artCharW;i++){
 			for (int j=0;j<artCharH;j++){
@@ -128,7 +128,7 @@ public class AsciiArtEditor extends BasicGame{
 	public void mouseDragged(int oldx, int oldy, int x, int y){
 //		System.out.println("x="+x+" y="+y);
 		if (leftButtonPressed){
-			int i = (x-artX0)/font.getWidth('0');
+			int i = (x-artX0)/font.getWidth('A');
 			int j = (y-artY0)/font.getHeight();
 			if (i>=0 && i< artCharW && j>=0 && j< artCharH){
 				artCharMap[i][j] = new SlickAutoCharacter(font, currentChar,currentColor,currentBackgroundColor);
