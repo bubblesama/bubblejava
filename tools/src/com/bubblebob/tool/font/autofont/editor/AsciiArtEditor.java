@@ -71,8 +71,8 @@ public class AsciiArtEditor extends BasicGame{
 	public void init(GameContainer gc) throws SlickException {
 		System.out.println("init");
 		this.font = new SlickAutoFont();
-//		this.font.initGlyphMap("assets/ascii.txt", "assets/ascii.png", true);
-		this.font.initGlyphMap("assets/cp437.txt", "assets/cp437.png", true);
+		this.font.initGlyphMap("assets/ascii.txt", "assets/ascii.png", true);
+//		this.font.initGlyphMap("assets/cp437.txt", "assets/cp437.png", true);
 		this.currentAutoCharacter = new SlickAutoCharacter(font, currentChar, currentColor, currentBackgroundColor);
 		for (int i=0;i<artCharW;i++){
 			for (int j=0;j<artCharH;j++){

@@ -33,14 +33,15 @@ public class GameRenderer {
 	private int scale =2;
 	private int xGridOffset = 3;//19;
 	private int yGridOffset = 54;
-	private int gridThickness = 1;
+	//private int gridThickness = 1;
+	private int gridThickness = 0;
 	private int renderedW=64;
 	private int renderedH=38;
 	public int fromI;
 	public int fromJ;
 	// inventory
 	private boolean displayInventory = false;
-	private int inventoryFromX = 1364;
+	private int inventoryFromX = 1300;
 	private int inventoryFromY = 10;
 	// loot
 	private boolean displayLoot = false;
