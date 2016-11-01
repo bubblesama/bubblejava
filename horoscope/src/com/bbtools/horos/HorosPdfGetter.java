@@ -11,11 +11,11 @@ import java.io.Writer;
 import java.nio.charset.Charset;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,8 +43,8 @@ public class HorosPdfGetter {
 	}
 
 	private static Map<String,Sign> translationMapping;
-	private static final String pdfFolder = "D:/tmp/horoscope/";
-	private static final String jsonFolder = "D:/tmp/horoscope/";
+	private static String pdfFolder = "D:/tmp/horoscope/";
+	private static String jsonFolder = "D:/tmp/horoscope/";
 	private String datePath;
 	private String yearPath;
 	private Date date;
@@ -70,6 +70,19 @@ public class HorosPdfGetter {
 		SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
 		datePath = compactDateFormat.format(date);
 		yearPath = yearFormat.format(date);
+		// configuration
+		Properties conf = new Properties();
+		try {
+			InputStream  input = new FileInputStream("horoscope.properties");
+			// load a properties file
+			conf.load(input);
+			pdfFolder = conf.getProperty("folder_pdf");
+			jsonFolder = conf.getProperty("folder_json");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -80,6 +93,7 @@ public class HorosPdfGetter {
 		String pdfName = datePath+"_LIL.pdf";
 		String pdfUrl = "http://pdf.20mn.fr/"+yearPath+"/quotidien/"+pdfName;
 		String pdfPath = pdfFolder+pdfName;
+		System.out.println("HorosPdfGetter#checkAndGetCurrentPdf pdf path: "+pdfPath);
 		System.out.println("HorosPdfGetter#checkAndGetCurrentPdf pdf url: "+pdfUrl);
 		File file = new File(pdfPath);
 		if (!file.exists()){
@@ -89,9 +103,8 @@ public class HorosPdfGetter {
 		return result;
 	}
 
-	
 	/**
-	 * Fournit une prediction jounaliere en recuperant le PDF sur le reseau
+	 * Fournit une prediction journaliere en recuperant le PDF sur le reseau
 	 * @return la prediction du jour du getter
 	 */
 	public DailyPrediction getPredictionFromPdf(){
@@ -140,7 +153,6 @@ public class HorosPdfGetter {
 		return result;
 	}
 
-	
 	/**
 	 * Sauvegarde dans un fichier JSON la prediction recuperee du PDF
 	 */
@@ -180,23 +192,6 @@ public class HorosPdfGetter {
 			System.out.println("Erreur de recuperation des horoscopes");
 		}
 	}
-
-
-	//	public static void main(String[] args) {
-	//		for (int i=1;i<30;i++){
-	//			String day = ""+i;
-	//			if (i<10){
-	//				day = "0"+day;
-	//			}
-	//			try {
-	//				HorosPdfGetter.synchroniseHoroscope("2015-06-"+day);
-	//			} catch (ParseException e) {
-	//				e.printStackTrace();
-	//			}
-	//
-	//		}
-	//
-	//	}
 
 	/**
 	 * Recupere le PDF de la date fournie et cree le fichier JSON de prediction correspondant
