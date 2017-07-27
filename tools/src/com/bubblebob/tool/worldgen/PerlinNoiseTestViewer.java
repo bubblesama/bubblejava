@@ -80,7 +80,7 @@ public class PerlinNoiseTestViewer extends BasicGame{
 
 	private void genBitmap(){
 		heightmap = heightNoise.generateOldAttenuatedBitmap(w, h);
-		temperatureMap = temperatureNoise.generateAttenuatedBitmap(w, h);
+		//temperatureMap = temperatureNoise.generateAttenuatedBitmap(w, h);
 	}
 
 	@Override	
@@ -96,7 +96,7 @@ public class PerlinNoiseTestViewer extends BasicGame{
 		}
 		// bitmap
 		heightmap = heightNoise.generateAttenuatedBitmap(w, h);
-		temperatureMap = temperatureNoise.generateAttenuatedBitmap(w, h);
+		//temperatureMap = temperatureNoise.generateAttenuatedBitmap(w, h);
 		// input 
 		this.input = gc.getInput();
 	}

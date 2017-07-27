@@ -89,7 +89,6 @@ public class ComposedPerlinNoise {
 				}
 				result[i][j] = attenuator(i/(double)w)*attenuator(j/(double)h)*value/pondSum;
 				
-//				this.bitmap[i][j] = value/pondSum;
 				if (result[i][j]> max){max = result[i][j];}
 				if (result[i][j]< min){min = result[i][j];}
 			}
