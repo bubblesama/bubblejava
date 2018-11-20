@@ -63,29 +63,30 @@ public class HorosPdfGetter {
 	}
 
 	private void init(){
+		System.out.println("HorosPdfGetter#init IN");
 		SimpleDateFormat compactDateFormat = new SimpleDateFormat("yyyyMMdd");
 		SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
 		this.datePath = compactDateFormat.format(date);
 		this.yearPath = yearFormat.format(date);
 		String pdfName = datePath+"_LIL.pdf";
 		this.pdfUrl = "http://pdf.20mn.fr/"+yearPath+"/quotidien/"+pdfName;
-		this.fullPdfPath = pdfFolder+pdfName;
+		
 		// configuration
 		Properties conf = new Properties();
 		try {
 			InputStream  input = getClass().getResourceAsStream("/horoscope.properties");
 			// load a properties file
 			conf.load(input);
+			System.out.println("HorosPdfGetter#init loading des confs");
 			pdfFolder = conf.getProperty("folder_pdf");
 			jsonFolder = conf.getProperty("folder_json");
+			System.out.println("HorosPdfGetter#init confs: pdfFolder="+pdfFolder+" jsonFolder="+jsonFolder);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-
-
+		this.fullPdfPath = pdfFolder+pdfName;
 	}
 
 	/**
