@@ -12,4 +12,47 @@ public enum Direction {
 		this.dy = dy;
 	}
 	
+	public Direction turn(CartTurn turn) {
+		Direction result = this;
+		switch (turn) {
+		case LEFT:
+			switch (this) {
+			case UP:
+				result = LEFT;
+				break;
+			case DOWN:
+				result = RIGHT;
+				break;
+			case LEFT:
+				result = DOWN;
+				break;
+			case RIGHT:
+				result = UP;
+				break;
+			default:
+				break;
+			}
+		case RIGHT:
+			switch (this) {
+			case UP:
+				result = RIGHT;
+				break;
+			case DOWN:
+				result = LEFT;
+				break;
+			case LEFT:
+				result = UP;
+				break;
+			case RIGHT:
+				result = DOWN;
+				break;
+			default:
+				break;
+			}
+		default:
+			break;
+		}
+		return result;
+	}
+	
 }
