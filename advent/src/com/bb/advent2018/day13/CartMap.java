@@ -26,8 +26,14 @@ public class CartMap {
 		return carts.add(e);
 	}
 	
-	
-	
-	
+	public boolean shouldCrash(int cartId, int i, int j) {
+		boolean result = false;
+		for (Cart cart: carts) {
+			if (cart.id != cartId && cart.i == i && cart.j == j) {
+				result = true;
+			}
+		}
+		return result;
+	}
 
 }

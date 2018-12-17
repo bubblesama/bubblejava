@@ -4,12 +4,12 @@ public enum Direction {
 
 	UP(0,-1),DOWN(0,1),LEFT(-1,0),RIGHT(1,0);
 
-	public int dx;
-	public int dy;
+	public int di;
+	public int dj;
 	
-	private Direction(int dx, int dy) {
-		this.dx = dx;
-		this.dy = dy;
+	private Direction(int di, int dj) {
+		this.di = di;
+		this.dj = dj;
 	}
 	
 	public Direction turn(CartTurn turn) {
