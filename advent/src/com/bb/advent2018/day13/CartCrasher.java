@@ -56,7 +56,9 @@ public class CartCrasher extends BasicGame{
 	public void update(GameContainer gc, int spent) throws SlickException {
 		shouldTick = true;
 		if (shouldTick) {
-			map.tick();
+			for (int i =0;i<100;i++) {
+				map.tick();
+			}
 		}
 	}
 
