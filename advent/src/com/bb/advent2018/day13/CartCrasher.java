@@ -4,26 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import com.bb.advent2018.day10.Star;
-
 public class CartCrasher {
 
 	private static final String INPUT_FILE_NAME = "res/day13-input.txt";
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	private void initFromFile() {
 		
