@@ -12,12 +12,12 @@ public class CartCrasher extends BasicGame{
 
 	private static final String INPUT_FILE_NAME = "res/day13-input.txt";
 	private static final int SCALE = 4;
-	
+
 	private CartMap map;
-	
+
 	//game state
 	private boolean shouldTick = false;
-	
+
 	public CartCrasher(CartMap map) {
 		super("advent 2018 - day 13 - cart crasher");
 		this.map = map;
@@ -46,7 +46,7 @@ public class CartCrasher extends BasicGame{
 		//
 		g.setColor(Color.green);
 		g.drawString("#"+map.tick+" "+map.getCrashed()+" crashed", 0, 0);
-		
+
 	}
 
 	@Override
@@ -54,14 +54,12 @@ public class CartCrasher extends BasicGame{
 
 	@Override
 	public void update(GameContainer gc, int spent) throws SlickException {
-		int tickSpeed = 1;
+		shouldTick = true;
 		if (shouldTick) {
-			for (int i=0;i<tickSpeed;i++) {
-				map.tick();
-			}
+			map.tick();
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		AppGameContainer app;
 		try {
@@ -79,17 +77,17 @@ public class CartCrasher extends BasicGame{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void keyPressed(int keyCode, char keyChar) {
 		if (keyCode == Input.KEY_SPACE){
 			shouldTick = true;
 		}
 	}
-	
+
 	public void keyReleased(int keyCode, char keyChar) {
 		if (keyCode == Input.KEY_SPACE){
 			shouldTick = false;
 		}
 	}
-	
+
 }
