@@ -5,6 +5,7 @@ import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 public class CartCrasher extends BasicGame{
@@ -13,6 +14,12 @@ public class CartCrasher extends BasicGame{
 	private static final int SCALE = 4;
 	
 	private CartMap map;
+	
+	//game state
+	private boolean shouldTick = false;
+	private boolean hasTicked = false;
+	
+	
 	
 	public CartCrasher(CartMap map) {
 		super("advent 2018 - day 13 - cart crasher");
@@ -41,7 +48,7 @@ public class CartCrasher extends BasicGame{
 		}
 		//
 		g.setColor(Color.green);
-		g.drawString(map.getCrashed()+" crashed", 0, 0);
+		g.drawString("#"+map.tick+" "+map.getCrashed()+" crashed", 0, 0);
 		
 	}
 
@@ -50,10 +57,13 @@ public class CartCrasher extends BasicGame{
 
 	@Override
 	public void update(GameContainer gc, int spent) throws SlickException {
-		int  tickSpeed = 1;
 		
-		for (int i=0;i<tickSpeed;i++) {
-			map.tick();
+		int tickSpeed = 1;
+		if (shouldTick && !hasTicked) {
+			for (int i=0;i<tickSpeed;i++) {
+				map.tick();
+			}
+			hasTicked = true;
 		}
 	}
 	
@@ -67,7 +77,7 @@ public class CartCrasher extends BasicGame{
 			app.setDisplayMode(map.w*SCALE+200, map.h*SCALE, false);
 			app.setMinimumLogicUpdateInterval(10);
 			app.isVSyncRequested();
-			app.setTargetFrameRate(60);
+			app.setTargetFrameRate(1);
 			app.setShowFPS(false);
 			app.start();
 		} catch (SlickException e) {
@@ -75,5 +85,12 @@ public class CartCrasher extends BasicGame{
 		}
 	}
 	
+	public void keyPressed(int keyCode, char keyChar) {
+		if (keyCode == Input.KEY_SPACE){
+			if (!shouldTick && !hasTicked) {
+				shouldTick = true;
+			}
+		}
+	}
 	
 }
