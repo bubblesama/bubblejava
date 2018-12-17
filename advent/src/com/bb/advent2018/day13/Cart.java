@@ -20,7 +20,12 @@ public class Cart {
 	}
 	
 	public void step(CartMap map) {
+		if (!this.isCrashed && map.shouldCrash(this.id, this.i, this.j)) {
+			this.isCrashed = true;
+		}
 		if (!this.isCrashed) {
+			//check crash site
+			
 			//move
 			this.i += this.direction.di;
 			this.j += this.direction.dj;

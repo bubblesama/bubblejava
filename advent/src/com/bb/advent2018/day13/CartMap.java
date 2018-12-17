@@ -35,12 +35,25 @@ public class CartMap {
 		return carts.add(e);
 	}
 	
+	public int getCrashed() {
+		int result = 0;
+		for (Cart cart: carts) {
+			if (cart.isCrashed){
+				result++;
+			}
+		}
+		return result;
+	}
+	
 	public boolean shouldCrash(int cartId, int i, int j) {
 		boolean result = false;
 		for (Cart cart: carts) {
 			if (cart.id != cartId && cart.i == i && cart.j == j) {
 				result = true;
 			}
+		}
+		if (result) {
+			System.out.println("CartMap#shouldCrash crash on ("+i+","+j+")");
 		}
 		return result;
 	}
