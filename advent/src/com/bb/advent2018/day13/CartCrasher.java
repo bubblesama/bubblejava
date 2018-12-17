@@ -17,9 +17,6 @@ public class CartCrasher extends BasicGame{
 	
 	//game state
 	private boolean shouldTick = false;
-	private boolean hasTicked = false;
-	
-	
 	
 	public CartCrasher(CartMap map) {
 		super("advent 2018 - day 13 - cart crasher");
@@ -57,13 +54,11 @@ public class CartCrasher extends BasicGame{
 
 	@Override
 	public void update(GameContainer gc, int spent) throws SlickException {
-		
 		int tickSpeed = 1;
-		if (shouldTick && !hasTicked) {
+		if (shouldTick) {
 			for (int i=0;i<tickSpeed;i++) {
 				map.tick();
 			}
-			hasTicked = true;
 		}
 	}
 	
@@ -77,7 +72,7 @@ public class CartCrasher extends BasicGame{
 			app.setDisplayMode(map.w*SCALE+200, map.h*SCALE, false);
 			app.setMinimumLogicUpdateInterval(10);
 			app.isVSyncRequested();
-			app.setTargetFrameRate(1);
+			app.setTargetFrameRate(50);
 			app.setShowFPS(false);
 			app.start();
 		} catch (SlickException e) {
@@ -87,9 +82,13 @@ public class CartCrasher extends BasicGame{
 	
 	public void keyPressed(int keyCode, char keyChar) {
 		if (keyCode == Input.KEY_SPACE){
-			if (!shouldTick && !hasTicked) {
-				shouldTick = true;
-			}
+			shouldTick = true;
+		}
+	}
+	
+	public void keyReleased(int keyCode, char keyChar) {
+		if (keyCode == Input.KEY_SPACE){
+			shouldTick = false;
 		}
 	}
 	

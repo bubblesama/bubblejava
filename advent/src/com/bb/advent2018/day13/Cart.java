@@ -20,6 +20,7 @@ public class Cart {
 	}
 	
 	public void step(CartMap map) {
+		//precheck for crash
 		if (!this.isCrashed && map.shouldCrash(this.id, this.i, this.j)) {
 			this.isCrashed = true;
 		}
@@ -34,7 +35,6 @@ public class Cart {
 				Direction newDirection = null;
 				CartTurn turn = null;
 				switch (map.getCell(i, j).track) {
-				
 				case RIGHTDOWN://==UPLEFT
 					switch (this.direction) {
 					case LEFT:
@@ -53,7 +53,6 @@ public class Cart {
 						break;
 					}
 				break;
-			
 				case UPRIGHT://== DOWNLEFT
 					switch (this.direction) {
 					case LEFT:
@@ -72,10 +71,10 @@ public class Cart {
 						break;
 					}
 				break;
-					
 				case CROSS:
 					newDirection = this.direction.turn(this.nextTurn);
 					turn = this.nextTurn.next();
+					//System.out.println("Cart#step changing direction from "+direction+" to "+newDirection);
 					break;
 				default:
 					break;

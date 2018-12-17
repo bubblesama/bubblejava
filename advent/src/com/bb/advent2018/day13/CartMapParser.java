@@ -110,7 +110,7 @@ public class CartMapParser {
 				ex.printStackTrace();
 			}
 		}
-		System.out.println("map parsed: w="+map.w+" h="+map.h+" carts="+map.carts.size());
+		//System.out.println("map parsed: w="+map.w+" h="+map.h+" carts="+map.carts.size());
 		
 		return map;
 		
