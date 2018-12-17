@@ -9,13 +9,20 @@ public class CartMap {
 	private List<Cart> carts;
 	public int w;
 	public int h;
-	
+	public int tick;
+	private static CartSorter sorter = new CartSorter();
 	
 	public CartMap(int width, int height) {
 		super();
 		this.w = width;
 		this.h= height;
 		this.map = new Cell[w][h];
+		this.tick = 0;
+		for (int i=0; i<width; i++) {
+			for (int j=0; j<height; j++) {
+				map[i][j] = new Cell(i,j,TrackType.NONE);
+			}
+		}
 	}
 
 	public Cell getCell(int i, int j) {
@@ -34,6 +41,14 @@ public class CartMap {
 			}
 		}
 		return result;
+	}
+	
+	public void tick() {
+		carts.sort(sorter);
+		for (Cart cart: carts) {
+			cart.step(this);
+		}
+		tick++;
 	}
 
 }
