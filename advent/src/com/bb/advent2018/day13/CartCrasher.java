@@ -46,7 +46,11 @@ public class CartCrasher extends BasicGame{
 
 	@Override
 	public void update(GameContainer gc, int spent) throws SlickException {
-		map.tick();
+		int  tickSpeed = 100;
+		
+		for (int i=0;i<tickSpeed;i++) {
+			map.tick();
+		}
 	}
 	
 	public static void main(String[] args) {

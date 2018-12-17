@@ -1,6 +1,7 @@
 package com.bb.advent2018.day13;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CartMap {
@@ -59,7 +60,15 @@ public class CartMap {
 	}
 	
 	public void tick() {
+		Collections.shuffle(carts);
 		carts.sort(sorter);
+		if (tick < 10) {
+			String showCarts = "";
+			for (Cart cart: carts) {
+				showCarts += cart.show();
+			}
+			//System.out.println("carts: "+showCarts);
+		}
 		for (Cart cart: carts) {
 			cart.step(this);
 		}

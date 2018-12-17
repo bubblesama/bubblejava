@@ -24,8 +24,6 @@ public class Cart {
 			this.isCrashed = true;
 		}
 		if (!this.isCrashed) {
-			//check crash site
-			
 			//move
 			this.i += this.direction.di;
 			this.j += this.direction.dj;
@@ -37,7 +35,7 @@ public class Cart {
 				CartTurn turn = null;
 				switch (map.getCell(i, j).track) {
 				
-				case RIGHTDOWN:
+				case RIGHTDOWN://==UPLEFT
 					switch (this.direction) {
 					case LEFT:
 						newDirection = Direction.DOWN;
@@ -56,7 +54,7 @@ public class Cart {
 					}
 				break;
 			
-				case UPRIGHT:
+				case UPRIGHT://== DOWNLEFT
 					switch (this.direction) {
 					case LEFT:
 						newDirection = Direction.UP;
@@ -90,6 +88,10 @@ public class Cart {
 				}
 			}
 		}
+	}
+	
+	public String show() {
+		return "<id:"+id+" i:"+i+" j:"+j+">";
 	}
 
 }
