@@ -31,9 +31,13 @@ public class CartCrasher extends BasicGame{
 			}
 		}
 		//
-		g.setColor(Color.red);
+		g.setColor(Color.blue);
 		for (Cart cart: map.carts) {
+			if (cart.isCrashed) {
+				g.setColor(Color.red);
+			}
 			g.fillRect((cart.i-1)*SCALE, (cart.j-1)*SCALE, 3*SCALE, 3*SCALE);
+			g.setColor(Color.blue);
 		}
 		//
 		g.setColor(Color.green);
@@ -46,7 +50,7 @@ public class CartCrasher extends BasicGame{
 
 	@Override
 	public void update(GameContainer gc, int spent) throws SlickException {
-		int  tickSpeed = 100;
+		int  tickSpeed = 1;
 		
 		for (int i=0;i<tickSpeed;i++) {
 			map.tick();
