@@ -1,51 +1,63 @@
 package com.bb.advent2018.day13;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import org.newdawn.slick.AppGameContainer;
+import org.newdawn.slick.BasicGame;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
-public class CartCrasher {
+public class CartCrasher extends BasicGame{
 
 	private static final String INPUT_FILE_NAME = "res/day13-input.txt";
+	private static final int SCALE = 4;
 	
-	private void initFromFile() {
-		
-		//reading input file to initiate cart map size
-		BufferedReader br = null;
-		FileReader fr = null;
-		try {
-			fr = new FileReader(INPUT_FILE_NAME);
-			br = new BufferedReader(fr);
-			String sCurrentLine;
-			while ((sCurrentLine = br.readLine()) != null) {
-			
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (br != null) {
-					br.close();
+	private CartMap map;
+	
+	public CartCrasher(CartMap map) {
+		super("advent 2018 - day 13 - cart crasher");
+		this.map = map;
+	}
+
+	@Override
+	public void render(GameContainer gc, Graphics g) throws SlickException {
+		g.setColor(Color.white);
+		for (int i=0;i<map.w;i++) {
+			for (int j=0;j<map.h;j++) {
+				if (map.getCell(i, j).track != TrackType.NONE) {
+					g.fillRect(i*SCALE, j*SCALE, SCALE, SCALE);
 				}
-				if (fr != null) {
-					fr.close();
-				}
-			} catch (IOException ex) {
-				ex.printStackTrace();
 			}
 		}
-		//log("init cluster initiated, stars="+cluster.size());
-		
-		
-		
-		
+		g.setColor(Color.red);
+		for (Cart cart: map.carts) {
+			g.fillRect((cart.i-1)*SCALE, (cart.j-1)*SCALE, 3*SCALE, 3*SCALE);
+		}
 	}
+
+	@Override
+	public void init(GameContainer gc) throws SlickException {}
+
+	@Override
+	public void update(GameContainer gc, int spent) throws SlickException {}
 	
-	
-	
-	
-	
-	
+	public static void main(String[] args) {
+		AppGameContainer app;
+		try {
+			CartMap map = CartMapParser.parseInputFile();
+			BasicGame aligner = new CartCrasher(map);
+			app = new AppGameContainer(aligner);
+			app.setIcon("res/icon-fake.png");
+			app.setDisplayMode(map.w*SCALE+200, map.h*SCALE, false);
+			app.setMinimumLogicUpdateInterval(10);
+			app.isVSyncRequested();
+			app.setTargetFrameRate(60);
+			app.setShowFPS(false);
+			app.start();
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 }

@@ -31,19 +31,6 @@ public class Cart {
 				Direction newDirection = null;
 				CartTurn turn = null;
 				switch (map.getCell(i, j).track) {
-					
-				case DOWNLEFT:
-						switch (this.direction) {
-						case RIGHT:
-							newDirection = Direction.DOWN;
-							break;
-						case UP:
-							newDirection = Direction.LEFT;
-							break;
-						default:
-							break;
-						}
-					break;
 				
 				case RIGHTDOWN:
 					switch (this.direction) {
@@ -53,13 +40,6 @@ public class Cart {
 					case UP:
 						newDirection = Direction.RIGHT;
 						break;
-					default:
-						break;
-					}
-				break;
-			
-				case UPLEFT:
-					switch (this.direction) {
 					case RIGHT:
 						newDirection = Direction.UP;
 						break;
@@ -70,7 +50,7 @@ public class Cart {
 						break;
 					}
 				break;
-					
+			
 				case UPRIGHT:
 					switch (this.direction) {
 					case LEFT:
@@ -78,6 +58,12 @@ public class Cart {
 						break;
 					case DOWN:
 						newDirection = Direction.RIGHT;
+						break;
+					case RIGHT:
+						newDirection = Direction.DOWN;
+						break;
+					case UP:
+						newDirection = Direction.LEFT;
 						break;
 					default:
 						break;

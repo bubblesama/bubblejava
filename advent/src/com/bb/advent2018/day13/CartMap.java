@@ -1,12 +1,13 @@
 package com.bb.advent2018.day13;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CartMap {
 	
 	//model
 	private Cell[][] map;
-	private List<Cart> carts;
+	public List<Cart> carts;
 	public int w;
 	public int h;
 	public int tick;
@@ -18,6 +19,7 @@ public class CartMap {
 		this.h= height;
 		this.map = new Cell[w][h];
 		this.tick = 0;
+		this.carts = new ArrayList<Cart>();
 		for (int i=0; i<width; i++) {
 			for (int j=0; j<height; j++) {
 				map[i][j] = new Cell(i,j,TrackType.NONE);
