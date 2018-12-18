@@ -32,6 +32,7 @@ public enum Direction {
 			default:
 				break;
 			}
+		break;
 		case RIGHT:
 			switch (this) {
 			case UP:
@@ -49,9 +50,11 @@ public enum Direction {
 			default:
 				break;
 			}
+		break;
 		default:
 			break;
 		}
+		//System.out.println("Direction#turn turning "+turn+" on "+this+" means "+result);
 		return result;
 	}
 	
