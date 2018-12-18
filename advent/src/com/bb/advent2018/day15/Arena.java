@@ -14,6 +14,19 @@ public class Arena {
 	
 	private static MobSorterByHealthThenOrder HP_SORTER = new MobSorterByHealthThenOrder();
 	
+	public Arena(int width, int height) {
+		this.w = width;
+		this.h= height;
+		this.map = new Cell[w][h];
+		for (int i=0;i<w;i++) {
+			for (int j=0;j<h;j++) {
+				
+			}
+		}
+		
+	}
+	
+	
 	public WarPath getShortestPathToBlood(int fromI, int fromJ, MobType ennemy) {
 		//TODO
 		return null;
