@@ -115,78 +115,6 @@ public class Arena {
 			//TODO managing no step
 		}
 		return result;
-		
-		/*
-		//pathing to each reachable place
-		Set<Cell> cellsToExplore = new HashSet<Cell>();
-		Map<Cell,Integer> currentDistanceByCell = new HashMap<Cell,Integer>();
-		Map<Cell,Cell> bestPreviousSteps = new HashMap<Cell,Cell>();
-		Set<Cell> exploredCells = new HashSet<Cell>();
-		// init
-		exploredCells.add(map[fromI][fromJ]);
-		currentDistanceByCell.put(map[fromI][fromJ], 0);
-		List<Cell> firstCells = getFreeNeighbourHood(fromI, fromJ);
-		for (Cell cell: firstCells) {
-			cellsToExplore.add(cell);
-			currentDistanceByCell.put(cell,1);
-			bestPreviousSteps.put(cell, map[fromI][fromJ]);
-		}
-		//while cells to exlore
-		while (!cellsToExplore.isEmpty()) {
-			//finding first cell to explore
-			Cell nextCell = null;
-			int minDist = INFINITE_DISTANCE;
-			for (Cell cell: cellsToExplore) {
-				int currentDist = currentDistanceByCell.get(cell);
-				if (currentDist< minDist) {
-					nextCell = cell;
-					minDist = currentDist;
-				}
-			}
-			//looking for neighbour
-			List<Cell> neighbourhood = getFreeNeighbourHood(nextCell.i, nextCell.j);
-			for (Cell cell: neighbourhood) {
-				//checking only not explored cells
-				if (!exploredCells.contains(cell)) {
-					if (cellsToExplore.contains(cell)) {
-						int checkedDistance = currentDistanceByCell.get(cell);
-						if (checkedDistance > minDist+1) {
-							currentDistanceByCell.put(cell, minDist);
-							bestPreviousSteps.put(cell, nextCell);
-						}
-					}else {
-						cellsToExplore.add(cell);
-						currentDistanceByCell.put(cell,minDist+1);
-						bestPreviousSteps.put(cell, nextCell);
-					}
-				}
-			}
-			exploredCells.add(nextCell);
-			cellsToExplore.remove(nextCell);
-		}
-		//finding ennemy spots 
-		Set<Cell> allSpots = new HashSet<Cell>();
-		for (Mob mob: mobs) {
-			if (ennemy == mob.type.ennemy()) {
-				allSpots.addAll(getFreeNeighbourHood(mob.i, mob.j));
-			}
-		}
-		// filtering 
-		Set<Cell> reachableSpots = allSpots.stream().filter(spot -> exploredCells.contains(spot)).collect(Collectors.toSet());
-		//finding best cell to go to
-		int minDistanceToEnnemySpot = INFINITE_DISTANCE;
-		Cell bestReachableEnnemySpot = null;
-		for (Cell cell: reachableSpots) {
-			int currentDist = currentDistanceByCell.get(cell);
-			if (currentDist< minDistanceToEnnemySpot) {
-				bestReachableEnnemySpot = cell;
-				minDistanceToEnnemySpot = currentDist;
-			}
-		}
-		//TODO la suite
-		return null;
-		
-		*/
 	}
 	
 	public Mob getWeakestEnnemyNeighbour(int fromI, int fromJ, MobType ennemy) {
@@ -209,6 +137,9 @@ public class Arena {
 		mobs.add(new Mob(type, i, j));
 	}
 
+	public void changeCell(CellType type, int i, int j) {
+		map[i][j].type = type;
+	}
 	
 	private static int[][] DELTA_NEAR = {{0,-1},{1,0},{0,1},{-1,0}};
 	private List<Cell> getNeighbourHood(int fromI, int fromJ){
@@ -225,6 +156,9 @@ public class Arena {
 	
 	private List<Cell> getOrderedFreeNeighbourHood(int fromI, int fromJ){
 		List<Cell> result = getNeighbourHood(fromI, fromJ);
+		//keep only spaces
+		result.stream().filter(cell -> cell.type == CellType.SPACE).collect(Collectors.toList());
+		//
 		List<Cell> occupiedCells = new ArrayList<Cell>();
 		for (Cell cell: result) {
 			for (Mob mob: mobs) {
@@ -237,10 +171,5 @@ public class Arena {
 		result.sort(CELL_POSITION_SORTER);
 		return result;
 	}
-	
-	
-	
-	
-	
 	
 }

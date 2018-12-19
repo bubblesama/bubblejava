@@ -10,7 +10,7 @@ public class Mob {
 	private static final int GRAVITY = 3;
 	private static final int DEFAULT_HP = 200;
 	
-	public Mob( MobType type, int i, int j) {
+	public Mob(MobType type, int i, int j) {
 		super();
 		this.i = i;
 		this.j = j;
@@ -36,7 +36,7 @@ public class Mob {
 					//move
 					step(path);
 				}else {
-					//TODO log nothingto do
+					//TODO log nothing to do
 				}
 			}
 		}
