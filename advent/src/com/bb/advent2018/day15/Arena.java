@@ -52,17 +52,15 @@ public class Arena {
 		mobs.add(new Mob(type, i, j));
 	}
 
+	
+	private static int[][] DELTA_NEAR = {{0,-1},{1,0},{0,1},{-1,0}};
 	private List<Cell> getNeighbourHood(int fromI, int fromJ){
 		List<Cell> result = new ArrayList<Cell>();
-		for (int i=-1;i<2;i++) {
-			for (int j=-1;j<2;j++) {
-				if (i!=0&&j!=0) {
-					int x = i+fromI;
-					int y = j+fromJ;
-					if (x>=0&&x<w&&y>=0&&y<h) {
-						result.add(map[x][y]);
-					}
-				}
+		for (int[] didj : DELTA_NEAR) {
+			int x = didj[0]+fromI;
+			int y = didj[1]+fromJ;
+			if (x>=0&&x<w&&y>=0&&y<h) {
+				result.add(map[x][y]);
 			}
 		}
 		return result;
