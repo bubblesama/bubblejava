@@ -26,7 +26,7 @@ public class Arena {
 		this.map = new Cell[w][h];
 		for (int i=0;i<w;i++) {
 			for (int j=0;j<h;j++) {
-				
+				map[i][h] = new Cell(CellType.ROCK,i,j);
 			}
 		}
 	}

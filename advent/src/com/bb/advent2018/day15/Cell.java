@@ -6,10 +6,16 @@ public class Cell {
 	public int j;
 	public CellType type;
 	
+	public Cell(CellType type, int i, int j) {
+		super();
+		this.i = i;
+		this.j = j;
+		this.type = type;
+	}
+	
 	public boolean equals(Object cell) {
 		return (i == ((Cell)(cell)).i && ((Cell)(cell)).j == j);
 	}
-	
 	
 	public int compareReadingPosition(Cell other) {
 		if (j<other.j) {
@@ -26,6 +32,5 @@ public class Cell {
 			}
 		}
 	}
-	
 	
 }
