@@ -24,17 +24,19 @@ public class Mob {
 	
 	public void act(Arena arena) {
 		if (!isDead()) {
-			//TODO check direct neighbourhood
+			//check direct neighbourhood
 			Mob target = arena.getWeakestEnnemyNeighbour(i, j, type.ennemy());
 			if (target != null) {
 				//hit ennemies
 				attack(target, GRAVITY);
 			}else {
-				//check distant avalaible ennemies
+				//check distant available ennemies
 				WarPath path = arena.getShortestPathToBlood(i, j, type.ennemy());
 				if (path != null) {
 					//move
 					step(path);
+				}else {
+					//TODO log nothingto do
 				}
 			}
 		}

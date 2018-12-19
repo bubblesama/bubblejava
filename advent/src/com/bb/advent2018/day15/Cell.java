@@ -11,4 +11,21 @@ public class Cell {
 	}
 	
 	
+	public int compareReadingPosition(Cell other) {
+		if (j<other.j) {
+			return -1;
+		}else if (this.j>other.j) {
+			return 1;
+		}else {//same j
+			if (this.i<other.i) {
+				return -1;
+			}else if (this.i>other.i) {
+				return 1;
+			}else {
+				return 0;
+			}
+		}
+	}
+	
+	
 }
