@@ -9,28 +9,57 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Arena {
-	
+
 	public Cell[][] map;
 	public List<Mob> mobs;
-	
+
 	public int w;
 	public int h;
-	
+
+	public int turn;
+
 	private static MobSorterByHealthThenOrder MOB_HP_SORTER = new MobSorterByHealthThenOrder();
+	private static MobSorterByReadingPosition MOB_POSITION_SORTER = new MobSorterByReadingPosition();
+
 	private static CellSorterByReadingPosition CELL_POSITION_SORTER = new CellSorterByReadingPosition();
 	private static final int INFINITE_DISTANCE = 10000;
-	
+
 	public Arena(int width, int height) {
 		this.w = width;
-		this.h= height;
+		this.h = height;
 		this.map = new Cell[w][h];
 		for (int i=0;i<w;i++) {
 			for (int j=0;j<h;j++) {
-				map[i][h] = new Cell(CellType.ROCK,i,j);
+				map[i][j] = new Cell(CellType.ROCK,i,j);
 			}
 		}
+		this.turn = 1;
+		this.mobs = new ArrayList<Mob>();
 	}
-	
+
+	public void doTurn() {
+		mobs.sort(MOB_POSITION_SORTER);
+		List<Mob> orderedWarriors = new ArrayList<Mob>();
+		orderedWarriors.addAll(mobs);
+		while (!orderedWarriors.isEmpty()) {
+			Mob nextWarrior = orderedWarriors.get(0);
+			nextWarrior.act(this);
+			//clean deads
+			//clearing the dead
+			List<Mob> deads = new ArrayList<Mob>();
+			for (Mob mob: mobs) {
+				if (mob.isDead()) {
+					deads.add(mob);
+				}
+			}
+			orderedWarriors.removeAll(deads);
+			orderedWarriors.remove(nextWarrior);
+			mobs.removeAll(deads);
+		}
+
+		turn++;
+	}
+
 	public WarPath getShortestPathToBlood(int fromI, int fromJ, MobType ennemy) {
 		WarPath result = null;
 		//finding ennemy spots 
@@ -39,6 +68,15 @@ public class Arena {
 			if (ennemy == mob.type.ennemy()) {
 				allEnnemySpots.addAll(getOrderedFreeNeighbourHood(mob.i, mob.j));
 			}
+		}
+		if (allEnnemySpots.isEmpty()) {
+			int totalHp = 0;
+			for (Mob mob: mobs) {
+				totalHp+= mob.hp;
+			}
+			int score = totalHp*turn;
+			System.out.println("Arena: battle ends with no remaining opponent! score: "+score);
+
 		}
 		//going through cells until reaching an ennemy
 		//init 
@@ -72,28 +110,26 @@ public class Arena {
 			//looking for neighbour
 			List<Cell> neighbourhood = getOrderedFreeNeighbourHood(exploredCell.i, exploredCell.j);
 			for (Cell neighbour: neighbourhood) {
-				if (!ennemyFound) {
-					//checking only not explored cells
-					if (!exploredCells.contains(neighbour)) {
-						//new cell
-						if (cellsToExplore.contains(neighbour)) {
-							int checkedDistance = currentDistanceByCell.get(neighbour);
-							if (checkedDistance > exploredCellDistance+1 || checkedDistance == exploredCellDistance+1 && exploredCell.compareReadingPosition(bestPreviousSteps.get(neighbour)) < 0) {
-								currentDistanceByCell.put(neighbour, exploredCellDistance+1);
-								bestPreviousSteps.put(neighbour, exploredCell);
-							}
-						}else {
-							//already seen cell
-							cellsToExplore.add(neighbour);
-							currentDistanceByCell.put(neighbour,exploredCellDistance+1);
+				//checking only not explored cells
+				if (!exploredCells.contains(neighbour)) {
+					//new cell
+					if (cellsToExplore.contains(neighbour)) {
+						int checkedDistance = currentDistanceByCell.get(neighbour);
+						if (checkedDistance > exploredCellDistance+1 || checkedDistance == exploredCellDistance+1 && exploredCell.compareReadingPosition(bestPreviousSteps.get(neighbour)) < 0) {
+							currentDistanceByCell.put(neighbour, exploredCellDistance+1);
 							bestPreviousSteps.put(neighbour, exploredCell);
 						}
-					}
-					if (allEnnemySpots.contains(neighbour)) {
-						ennemyFound = true;
-						ennemySpotToReach = neighbour;
+					}else {
+						//already seen cell
+						cellsToExplore.add(neighbour);
+						currentDistanceByCell.put(neighbour,exploredCellDistance+1);
+						bestPreviousSteps.put(neighbour, exploredCell);
 					}
 				}
+			}
+			if (allEnnemySpots.contains(exploredCell)) {
+				ennemyFound = true;
+				ennemySpotToReach = exploredCell;
 			}
 			exploredCells.add(exploredCell);
 			cellsToExplore.remove(exploredCell);
@@ -104,10 +140,11 @@ public class Arena {
 			path.prependStep(ennemySpotToReach.i,ennemySpotToReach.j);
 			boolean startReached = false;
 			while (!startReached) {
-				Cell preStep = bestPreviousSteps.get(path.getFirstStep());
-				path.prependStep(preStep.i,preStep.j);
+				Cell preStep = bestPreviousSteps.get(map[path.getFirstStep().i][path.getFirstStep().j]);
 				if (preStep == map[fromI][fromJ]) {
 					startReached = true;
+				}else {
+					path.prependStep(preStep.i,preStep.j);
 				}
 			}
 			result = path;
@@ -116,7 +153,7 @@ public class Arena {
 		}
 		return result;
 	}
-	
+
 	public Mob getWeakestEnnemyNeighbour(int fromI, int fromJ, MobType ennemy) {
 		Mob result = null;
 		List<Cell> cells = getNeighbourHood(fromI,fromJ);
@@ -132,7 +169,7 @@ public class Arena {
 		}
 		return result;
 	}
-	
+
 	public void pop(MobType type, int i, int j) {
 		mobs.add(new Mob(type, i, j));
 	}
@@ -140,7 +177,12 @@ public class Arena {
 	public void changeCell(CellType type, int i, int j) {
 		map[i][j].type = type;
 	}
-	
+
+	public Cell getCell(int i, int j) {
+		return map[i][j];
+	}
+
+
 	private static int[][] DELTA_NEAR = {{0,-1},{1,0},{0,1},{-1,0}};
 	private List<Cell> getNeighbourHood(int fromI, int fromJ){
 		List<Cell> result = new ArrayList<Cell>();
@@ -153,16 +195,16 @@ public class Arena {
 		}
 		return result;
 	}
-	
+
 	private List<Cell> getOrderedFreeNeighbourHood(int fromI, int fromJ){
 		List<Cell> result = getNeighbourHood(fromI, fromJ);
 		//keep only spaces
-		result.stream().filter(cell -> cell.type == CellType.SPACE).collect(Collectors.toList());
+		result = result.stream().filter(cell -> cell.type == CellType.SPACE).collect(Collectors.toList());
 		//
 		List<Cell> occupiedCells = new ArrayList<Cell>();
 		for (Cell cell: result) {
 			for (Mob mob: mobs) {
-				if (cell.i == mob.i && cell.j == cell.j) {
+				if (cell.i == mob.i && cell.j == mob.j) {
 					occupiedCells.add(cell);
 				}
 			}
@@ -171,5 +213,5 @@ public class Arena {
 		result.sort(CELL_POSITION_SORTER);
 		return result;
 	}
-	
+
 }
