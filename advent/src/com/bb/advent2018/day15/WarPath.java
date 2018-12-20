@@ -11,6 +11,7 @@ public class WarPath {
 	}
 
 	private List<Step> steps;
+	public Cell target;
 	
 	public Step getFirstStep() {
 		return steps.get(0);

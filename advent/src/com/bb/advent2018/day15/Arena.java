@@ -137,6 +137,7 @@ public class Arena {
 		if (ennemyFound) {
 			//constructing retropath
 			WarPath path = new WarPath();
+			path.target = ennemySpotToReach; 
 			path.prependStep(ennemySpotToReach.i,ennemySpotToReach.j);
 			boolean startReached = false;
 			while (!startReached) {
