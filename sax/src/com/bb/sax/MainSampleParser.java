@@ -17,8 +17,10 @@ import org.xml.sax.helpers.DefaultHandler;
 public class MainSampleParser extends DefaultHandler{
 
 
-	// simple parser 828 ms
-	// + listing and counting tags 907ms: 
+	// simple parser: 828 ms
+	// + listing and counting tags: 907ms
+	// + listing id and names for items and categories: 1353ms
+	
 	private long startTime;
 
 	private long startsCount = 0;
@@ -29,10 +31,12 @@ public class MainSampleParser extends DefaultHandler{
 
 	private Map<String,Item> itemsById = new HashMap<String,Item>();
 	private Map<String,Category> categoriesById = new HashMap<String,Category>();
+	private Map<String,Person> personsById = new HashMap<String,Person>();
 
 	private boolean isParsingName = false;
 	private Item currentItem;
 	private Category currentCategory;
+	private Person currentPerson;
 
 	public void startElement(String namespaceURI, String localName, String qName,  Attributes atts) throws SAXException {
 		startsCount++;
@@ -59,6 +63,16 @@ public class MainSampleParser extends DefaultHandler{
 				//CC#3 existence category.id
 				System.out.println("no id for category!");
 			}
+		}else if ("person".equals(localName)) {
+			currentPerson = new Person();
+			//id
+			String id = atts.getValue("id");
+			if (id != null) {
+				currentPerson.id = id;
+			}else {
+				//CC#5 existence person.id
+				System.out.println("no id for currentPerson!");
+			}
 		}
 
 	}
@@ -82,6 +96,14 @@ public class MainSampleParser extends DefaultHandler{
 				categoriesById.put(currentCategory.id, currentCategory);
 				currentCategory =null;
 			}
+		}else if ("person".equals(localName)){
+			if (personsById.containsKey(currentPerson.id)) {
+				//CC#6 unicité person.id
+				System.out.println("person with same id! "+currentPerson.id);
+			}else {
+				personsById.put(currentPerson.id, currentPerson);
+				currentPerson =null;
+			}
 		}
 		//name
 		if ("name".equals(localName)){
@@ -97,6 +119,8 @@ public class MainSampleParser extends DefaultHandler{
 				currentItem.name = String.valueOf(ch);
 			}else if (currentCategory != null) {
 				currentCategory.name = String.valueOf(ch);
+			}else if (currentPerson != null) {
+				currentPerson.name = String.valueOf(ch);
 			}
 		}
 	}
@@ -115,6 +139,8 @@ public class MainSampleParser extends DefaultHandler{
 		System.out.println("items: found "+itemsById.size());
 		//categories
 		System.out.println("categories: found "+categoriesById.size());
+		//persons
+		System.out.println("persons: found "+personsById.size());
 		System.out.println("document parsed: duration="+duration+"ms starts="+startsCount+" ends="+endsCount+" charsCounts="+charsCount);
 	}
 
