@@ -16,7 +16,7 @@ import org.xml.sax.helpers.DefaultHandler;
 //file found on http://www.ins.cwi.nl/projects/xmark/Assets/standard.gz
 public class MainSampleParser extends DefaultHandler{
 
-	
+
 	// simple parser 828 ms
 	// + listing and counting tags 907ms: 
 	private long startTime;
@@ -24,20 +24,22 @@ public class MainSampleParser extends DefaultHandler{
 	private long startsCount = 0;
 	private long endsCount = 0;
 	private long charsCount = 0;
-	
+
 	private Map<String,Integer> countsByTag = new HashMap<String,Integer>();
-	
+
 	private Map<String,Item> itemsById = new HashMap<String,Item>();
-	
-	private Item currentItem;
+	private Map<String,Category> categoriesById = new HashMap<String,Category>();
+
 	private boolean isParsingName = false;
-	
-	
-	
+	private Item currentItem;
+	private Category currentCategory;
+
 	public void startElement(String namespaceURI, String localName, String qName,  Attributes atts) throws SAXException {
 		startsCount++;
 		countsByTag.put(localName, countsByTag.containsKey(localName)?countsByTag.get(localName)+1:1);
-		if ("item".equals(localName)){
+		if ("name".equals(localName)){
+			isParsingName = true;
+		}else if ("item".equals(localName)){
 			currentItem = new Item();
 			//id
 			String id = atts.getValue("id");
@@ -47,12 +49,20 @@ public class MainSampleParser extends DefaultHandler{
 				//CC#2 existence item.id
 				System.out.println("no id for item!");
 			}
+		}else if ("category".equals(localName)) {
+			currentCategory = new Category();
+			//id
+			String id = atts.getValue("id");
+			if (id != null) {
+				currentCategory.id = id;
+			}else {
+				//CC#3 existence category.id
+				System.out.println("no id for category!");
+			}
 		}
-		if ("name".equals(localName)){
-			isParsingName = true;
-		}
+
 	}
-	
+
 	public void endElement(String uri, String localName, String qName) {
 		endsCount++;
 		//item
@@ -63,6 +73,14 @@ public class MainSampleParser extends DefaultHandler{
 			}else {
 				itemsById.put(currentItem.id, currentItem);
 				currentItem =null;
+			}
+		}else if ("category".equals(localName)){
+			if (categoriesById.containsKey(currentCategory.id)) {
+				//CC#4 unicité category.id
+				System.out.println("category with same id! "+currentCategory.id);
+			}else {
+				categoriesById.put(currentCategory.id, currentCategory);
+				currentCategory =null;
 			}
 		}
 		//name
@@ -77,14 +95,16 @@ public class MainSampleParser extends DefaultHandler{
 			// item
 			if (currentItem != null) {
 				currentItem.name = String.valueOf(ch);
+			}else if (currentCategory != null) {
+				currentCategory.name = String.valueOf(ch);
 			}
 		}
 	}
-	
+
 	public void startDocument() throws SAXException {
 		startTime = System.currentTimeMillis();
 	}
-	
+
 	public void endDocument() throws SAXException {
 		long duration = System.currentTimeMillis()-startTime;
 		//listing counted tags
@@ -93,6 +113,8 @@ public class MainSampleParser extends DefaultHandler{
 		});
 		//items
 		System.out.println("items: found "+itemsById.size());
+		//categories
+		System.out.println("categories: found "+categoriesById.size());
 		System.out.println("document parsed: duration="+duration+"ms starts="+startsCount+" ends="+endsCount+" charsCounts="+charsCount);
 	}
 
