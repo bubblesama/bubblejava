@@ -14,7 +14,7 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
 //file found on http://www.ins.cwi.nl/projects/xmark/Assets/standard.gz
-public class MainSampleParser extends DefaultHandler{
+public class ShallowParser extends DefaultHandler{
 
 
 	// simple parser: 828 ms
@@ -151,7 +151,7 @@ public class MainSampleParser extends DefaultHandler{
 		try {
 			saxParser = spf.newSAXParser();
 			XMLReader xmlReader = saxParser.getXMLReader();
-			xmlReader.setContentHandler(new MainSampleParser());
+			xmlReader.setContentHandler(new ShallowParser());
 			xmlReader.parse("sample/standard.xml");
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
