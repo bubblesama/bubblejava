@@ -203,19 +203,30 @@ public class HorosPdfGetter {
 		}
 	}
 
+	
+	/**
+	 * Argument: date following the format yyyy-MM-dd, optionnal (default: today
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		// horoscope du jour
-		HorosPdfGetter getter = new HorosPdfGetter();
-		
-		//forcage au 2018-11-16
-		SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd");
-		try {
-			Date chosenDate = dayFormat.parse("2019-03-22");
-			getter = new HorosPdfGetter(chosenDate);
-		} catch (ParseException e) {
-			e.printStackTrace();
+		HorosPdfGetter getter; 
+		if (args.length > 0) {
+			//forcage au 2018-03-22
+			SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd");
+			try {
+				Date chosenDate = dayFormat.parse(args[0]);
+				getter = new HorosPdfGetter(chosenDate);
+				System.out.println("HorosPdfGetter#main date provided "+args[0]);
+			} catch (ParseException e) {
+				System.out.println("HorosPdfGetter#main error on date, default date today taken into account");
+				e.printStackTrace();
+				getter = new HorosPdfGetter();
+			}
+		}else {
+			getter = new HorosPdfGetter();
+			System.out.println("HorosPdfGetter#main no date provided, default date on today");
 		}
-		
 		if (getter.checkAndGetCurrentPdf()){
 			DailyPrediction prediction = getter.getPredictionFromPdf();
 			if (prediction != null){
@@ -223,7 +234,7 @@ public class HorosPdfGetter {
 				getter.savePrediction();
 			}
 		}else{
-			System.out.println("Erreur de recuperation des horoscopes");
+			System.out.println("HorosPdfGetter#main Erreur de recuperation des horoscopes");
 		}
 	}
 
