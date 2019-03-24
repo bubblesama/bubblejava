@@ -38,8 +38,9 @@ public class HorosPdfGetter {
 	}
 
 	private static Map<String,Sign> translationMapping;
-	private static String pdfFolder = "D:/tmp/horoscope/";
-	private static String jsonFolder = "D:/tmp/horoscope/";
+	private static String FOLDER_PDF = "D:/tmp/horoscope/";
+	private static String FOLDER_JSON = "D:/tmp/horoscope/";
+	private static String URL_PATTERN="https://pdf.20mn.fr/%s/quotidien/%s";
 	private String datePath;
 	private String yearPath;
 	private String fullPdfPath;
@@ -64,13 +65,6 @@ public class HorosPdfGetter {
 
 	private void init(){
 		System.out.println("HorosPdfGetter#init IN");
-		SimpleDateFormat compactDateFormat = new SimpleDateFormat("yyyyMMdd");
-		SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
-		this.datePath = compactDateFormat.format(date);
-		this.yearPath = yearFormat.format(date);
-		String pdfName = datePath+"_LIL.pdf";
-		this.pdfUrl = "http://pdf.20mn.fr/"+yearPath+"/quotidien/"+pdfName;
-		
 		// configuration
 		Properties conf = new Properties();
 		try {
@@ -78,15 +72,22 @@ public class HorosPdfGetter {
 			// load a properties file
 			conf.load(input);
 			System.out.println("HorosPdfGetter#init loading des confs");
-			pdfFolder = conf.getProperty("folder_pdf");
-			jsonFolder = conf.getProperty("folder_json");
-			System.out.println("HorosPdfGetter#init confs: pdfFolder="+pdfFolder+" jsonFolder="+jsonFolder);
+			FOLDER_PDF = conf.getProperty("folder.pdf");
+			FOLDER_JSON = conf.getProperty("folder.json");
+			URL_PATTERN = conf.getProperty("url.pattern");
+			System.out.println("HorosPdfGetter#init confs: FOLDER_PDF="+FOLDER_PDF+" FORLDER_JSON="+FOLDER_JSON+" URL_PATTERN="+URL_PATTERN );
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		this.fullPdfPath = pdfFolder+pdfName;
+		SimpleDateFormat compactDateFormat = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+		this.datePath = compactDateFormat.format(date);
+		this.yearPath = yearFormat.format(date);
+		String pdfName = datePath+"_LIL.pdf";
+		this.pdfUrl = String.format(URL_PATTERN,yearPath,pdfName);
+		this.fullPdfPath = FOLDER_PDF+pdfName;
 	}
 
 	/**
@@ -179,7 +180,7 @@ public class HorosPdfGetter {
 	 * Sauvegarde dans un fichier JSON la prediction recuperee du PDF
 	 */
 	public void savePrediction(){
-		String jsonFilePath = pdfFolder+"json."+datePath+".txt";
+		String jsonFilePath = FOLDER_PDF+"json."+datePath+".txt";
 		File jsonFile = new File(jsonFilePath);
 		if (!jsonFile.exists()){
 			DailyPrediction prediction = getPredictionFromPdf();
@@ -205,16 +206,16 @@ public class HorosPdfGetter {
 	public static void main(String[] args) {
 		// horoscope du jour
 		HorosPdfGetter getter = new HorosPdfGetter();
-		/*
+		
 		//forcage au 2018-11-16
 		SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd");
 		try {
-			Date chosenDate = dayFormat.parse("2018-11-16");
+			Date chosenDate = dayFormat.parse("2019-03-22");
 			getter = new HorosPdfGetter(chosenDate);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		*/
+		
 		if (getter.checkAndGetCurrentPdf()){
 			DailyPrediction prediction = getter.getPredictionFromPdf();
 			if (prediction != null){
