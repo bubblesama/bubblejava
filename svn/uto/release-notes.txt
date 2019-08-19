@@ -1,0 +1,25 @@
+uto+
+
+v0.1.3.201212180022
+- gestionnaire de configuration des parties (nombre et durees des cycles)
+
+v0.1.2.201204172117
+VERSION JOUABLE
+- gestionnaire d'apparition des pirates, nuages et poissons
+- calcul des scores
+- gestion par proprietes des couts et des durees
+- carte egalitaire (meme surface d'ile)
+
+v0.1.1.201203181750
+- poissons pechables et crees par l'utilisateur
+- bateaux pirates crees par l'utilisateur
+- nuages de pluie crees par l'utilisateur, arrosant les cultures
+- les pirates et bateaux de patrouille detruisent les bateaux de peche
+- ordre d'affichage des objets
+
+v0.1.0.201202272210
+- deux curseurs deplacables
+- une carte configuree
+- 10 rounds de 40 secondes
+- achat des bateaux et batiments
+- deplacement des bateaux
