@@ -1,0 +1,4 @@
+walker
+current version
+- carte generee a partir d'un fichier image
+- bonhomme cognant les murs

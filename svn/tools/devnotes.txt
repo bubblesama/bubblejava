@@ -1,0 +1,15 @@
+
+server
+ * base communication
+    * serveur multi-client
+    * interface de saisie client
+ * base jeu
+ 	* liste  des jeux 
+ 	* creation d'un jeu
+ * introduction de la securite
+    * recuperation d'une cle lors de la creation
+    * cle demandee pour suppression d'un jeu 
+ * connexion a un jeu
+   * ajout des joueurs
+   * connexion avec recuperation d'une cle
+   * deconnexion

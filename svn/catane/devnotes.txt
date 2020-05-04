@@ -1,0 +1,23 @@
+dev-notes - Catane
+
+
+1- parsing des actions
+format des actions:
+TODO
+exemple
+{type:"PLACE_FREE_COLONY",player:"RED",vertexid:2}
+
+TODO liste au 2013-04-10
+ - serialisation des actions
+ - ligne de commande pour actions
+ - serveur
+ - synchronisation
+ - interface visuelle
+ - ports
+ - cartes developpements
+ 
+2013-04-17
+Developpement par introspection de l'analyse des lignes de commandes.
+
+2013-05-08
+Premiere version en ligne de commande

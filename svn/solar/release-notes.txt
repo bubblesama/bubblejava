@@ -1,0 +1,59 @@
+solar
+
+stellar
+TODO liste au 2013-05-12
+ - vue galactique avec zoom
+ - vue systeme avec selection des systemes
+ - structures: asteroides, postes marchands, stations, usines, postes militaires
+ - menu: splash screen, nouvelle partie
+ - boucles de production
+ - vaisseau (guidage en pathfinding)
+ - vaisseauX (vitesses, poids, inerties, soutes, etc...)
+ - menu: sauvegarde
+ - IA commercante stations
+ - IA commercante vaisseaux
+ - enrichissement commandes (scripts simples)
+ - combats lasers (+ armure, boucliers)
+ - IA pirate
+ - design vaisseaux
+ - combats missiles
+
+2013-05-12
+Début du code. Objectif: affichage des systemes en vue galactique avec zoom
+
+2013-05-13
+Vue galactique avec zoom par défaut
+
+2013-05-14
+Zoom en 10 paliers sur vue galactique
+
+2013-05-22
+Vue galactique avec paliers mieux choisis (pas de x2 au depart) et "culling" hors fenetre galactique
+
+2013-05-26
+Vue galactique avec dragging
+
+2013-05-27
+Vue galactique: Selection du systeme
+
+2013-05-30
+Factorisation du code d'affichage de la zone de carte: galactique et stellaire
+Vue stellaire: affichage des portes, zoom, drag
+
+2013-06-02
+Vue systeme: Selection des elements et affichage du nom
+
+2013-06-13
+Factorisation code element ecran sur les vues, avec la zone de carte de meme
+
+2013-06-22
+Ajout portes et usines
+
+2013-07-06
+Ajout gestionnaire de vaisseaux et vaisseaux statiques
+
+2013-07-12
+Ordre de direction sur vaisseau dans meme systeme
+
+2013-08-11
+Changement de direction en cours de traget, cumul des cibles
