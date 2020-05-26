@@ -2,10 +2,7 @@ package com.bb.citadel.proto;
 
 public class ActionTakeCard extends ActionAbstract{
 
-	private 
-	
 	public ActionTakeCard(){
-		
 		
 		
 	}
