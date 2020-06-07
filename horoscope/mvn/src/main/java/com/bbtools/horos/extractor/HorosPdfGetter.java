@@ -93,7 +93,7 @@ public class HorosPdfGetter {
 	/**
 	 * Verifie si le PDF existe, puis le telecharge eventuellement
 	 */
-	public boolean checkAndGetCurrentPdf(){
+	private boolean checkAndGetCurrentPdf(){
 		boolean result = true;
 		System.out.println("HorosPdfGetter#checkAndGetCurrentPdf IN  fullPdfPath="+this.fullPdfPath+" pdfUrl="+this.pdfUrl);
 		File file = new File(fullPdfPath);
@@ -122,11 +122,6 @@ public class HorosPdfGetter {
 				PDFTextStripper tStripper = new PDFTextStripper();
 				String pdfFileInText = tStripper.getText(document);
 				String lines[] = pdfFileInText.split("\\r?\\n");
-				/*
-				for (String line : lines) {
-					System.out.println(line);
-				}
-				*/
 				result = new DailyPrediction();
 				result.date = date;
 				for (String frenchSign: translationMapping.keySet()){
@@ -179,7 +174,7 @@ public class HorosPdfGetter {
 	/**
 	 * Sauvegarde dans un fichier JSON la prediction recuperee du PDF
 	 */
-	public void savePrediction(){
+	private void savePrediction(){
 		String jsonFilePath = FOLDER_PDF+"json."+datePath+".txt";
 		File jsonFile = new File(jsonFilePath);
 		if (!jsonFile.exists()){
@@ -205,7 +200,7 @@ public class HorosPdfGetter {
 
 	
 	/**
-	 * Argument: date following the format yyyy-MM-dd, optionnal (default: today
+	 * Argument: date following the format yyyy-MM-dd, optionnal (default: today)
 	 * @param args
 	 */
 	public static void main(String[] args) {

@@ -4,8 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.bbtools.horos</groupId>
-	<artifactId>extractor</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>horoscope-extractor</artifactId>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
 	<name>extractor</name>
@@ -30,7 +30,7 @@
 		<dependency>
 			<groupId>com.bbtools.tools</groupId>
 			<artifactId>webutils</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
 
